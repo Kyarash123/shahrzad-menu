@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="fa" dir="rtl" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منوی کافه شهرزاد</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            min-height: 100%;
+        }
+        
+        .menu-wrapper {
+            width: 100%;
+            min-height: 100%;
+            overflow-auto;
+            padding: 2rem 1rem;
+        }
+        
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding: 2rem 1rem;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #10b981, transparent);
+        }
+        
+        .cafe-name {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #9ca3af;
+            font-weight: 300;
+        }
+        
+        .category-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            padding: 0 1rem;
+        }
+        
+        .category-btn {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid #10b981;
+            color: #10b981;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+            white-space: nowrap;
+        }
+        
+        .category-btn:hover {
+            background: #10b981;
+            color: #000000;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        .category-btn.active {
+            background: #10b981;
+            color: #000000;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+        
+        .menu-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .menu-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #10b981;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #10b981, transparent);
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 0 1rem;
+        }
+        
+        .menu-item {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(16, 185, 129, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+        }
+        
+        .menu-item:hover::before {
+            opacity: 1;
+        }
+        
+        .item-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #ffffff;
+        }
+        
+        .item-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #10b981;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .price-number {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem 1rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .cafe-name {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .category-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .menu-wrapper {
+                padding: 1rem 0.5rem;
+            }
+            
+            .cafe-name {
+                font-size: 1.8rem;
+            }
+            
+            .category-buttons {
+                gap: 0.5rem;
+            }
+            
+            .category-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div class="menu-wrapper">
+   <div class="menu-container">
+    <header class="header">
+     <h1 class="cafe-name" id="cafe-name">شهرزاد</h1>
+     <p class="subtitle">تجربه‌ای لوکس از قهوه و نوشیدنی</p>
+    </header>
+    <nav class="category-buttons" role="navigation" aria-label="دسته‌بندی منو"><button class="category-btn active" data-category="hot">نوشیدنی گرم ☕</button> <button class="category-btn" data-category="herbal">دمنوش 🌿</button> <button class="category-btn" data-category="cold">نوشیدنی سرد 🧊</button> <button class="category-btn" data-category="hookah">قلیان 💨</button> <button class="category-btn" data-category="cake">کیک 🍰</button>
+    </nav>
+    <main>
+     <section class="menu-section active" data-section="hot">
+      <h2 class="section-title">نوشیدنی گرم</h2>
+      <div class="menu-grid">
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">کاپوچینو</span> <span class="item-price"><span class="price-number">۱۵۰</span><span id="currency-hot-1">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">لته</span> <span class="item-price"><span class="price-number">۱۵۰</span><span id="currency-hot-2">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">اسپرسو سینگل</span> <span class="item-price"><span class="price-number">۶۰</span><span id="currency-hot-3">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">اسپرسو دبل</span> <span class="item-price"><span class="price-number">۷۰</span><span id="currency-hot-4">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">کارامل ماکیاتو</span> <span class="item-price"><span class="price-number">۱۷۰</span><span id="currency-hot-5">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">آمریکانو</span> <span class="item-price"><span class="price-number">۱۰۰</span><span id="currency-hot-6">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">قهوه ترک</span> <span class="item-price"><span class="price-number">۱۰۰</span><span id="currency-hot-7">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">موکا</span> <span class="item-price"><span class="price-number">۱۷۰</span><span id="currency-hot-8">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">شیر داغ</span> <span class="item-price"><span class="price-number">۶۰</span><span id="currency-hot-9">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">شیر کاکائو داغ</span> <span class="item-price"><span class="price-number">۱۰۰</span><span id="currency-hot-10">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">شیر نارگیل</span> <span class="item-price"><span class="price-number">۱۰۰</span><span id="currency-hot-11">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">چای ماسالا</span> <span class="item-price"><span class="price-number">۱۲۰</span><span id="currency-hot-12">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">هات چاکلت</span> <span class="item-price"><span class="price-number">۱۲۰</span><span id="currency-hot-13">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">وایت چاکلت</span> <span class="item-price"><span class="price-number">۱۲۰</span><span id="currency-hot-14">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">هات چاکلت مارش مالو</span> <span class="item-price"><span class="price-number">۱۵۰</span><span id="currency-hot-15">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">چای بزرگ</span> <span class="item-price"><span class="price-number">۵۰</span><span id="currency-hot-16">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">چای کوچک</span> <span class="item-price"><span class="price-number">۳۰</span><span id="currency-hot-17">تومان</span></span>
+        </div>
+       </div>
+      </div>
+     </section>
+     <section class="menu-section" data-section="herbal">
+      <h2 class="section-title">دمنوش</h2>
+      <div class="menu-grid">
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">گل گاوزبان</span> <span class="item-price"><span class="price-number">۱۰۰</span><span id="currency-herbal-1">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">دمنوش آرام بخش</span> <span class="item-price"><span class="price-number">۱۰۰</span><span id="currency-herbal-2">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">دمنوش سرماخوردگی</span> <span class="item-price"><span class="price-number">۱۰۰</span><span id="currency-herbal-3">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">چای سبز</span> <span class="item-price"><span class="price-number">۱۲۰</span><span id="currency-herbal-4">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">دمنوش به لیمو زنجبیل</span> <span class="item-price"><span class="price-number">۱۲۰</span><span id="currency-herbal-5">تومان</span></span>
+        </div>
+       </div>
+      </div>
+     </section>
+     <section class="menu-section" data-section="cold">
+      <h2 class="section-title">نوشیدنی سرد</h2>
+      <div class="menu-grid">
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">آیس آمریکانو</span> <span class="item-price"><span class="price-number">۱۰۰</span><span id="currency-cold-1">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">آیس کارامل ماکیاتو</span> <span class="item-price"><span class="price-number">۱۷۰</span><span id="currency-cold-2">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">آفوگاتو</span> <span class="item-price"><span class="price-number">۱۲۰</span><span id="currency-cold-3">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">آیس لته</span> <span class="item-price"><span class="price-number">۱۷۰</span><span id="currency-cold-4">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">موهیتو</span> <span class="item-price"><span class="price-number">۱۴۰</span><span id="currency-cold-5">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">لیموناد</span> <span class="item-price"><span class="price-number">۱۴۰</span><span id="currency-cold-6">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">شیک توت فرنگی</span> <span class="item-price"><span class="price-number">۱۸۰</span><span id="currency-cold-7">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">شیک شکلات</span> <span class="item-price"><span class="price-number">۱۸۰</span><span id="currency-cold-8">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">شیک نوتلا</span> <span class="item-price"><span class="price-number">۲۰۰</span><span id="currency-cold-9">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">شیک کره بادام زمینی</span> <span class="item-price"><span class="price-number">۲۰۰</span><span id="currency-cold-10">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">شیک وانیل</span> <span class="item-price"><span class="price-number">۱۸۰</span><span id="currency-cold-11">تومان</span></span>
+        </div>
+       </div>
+      </div>
+     </section>
+     <section class="menu-section" data-section="hookah">
+      <h2 class="section-title">قلیان</h2>
+      <div class="menu-grid">
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">قلیان</span> <span class="item-price"><span class="price-number">۱۷۰</span><span id="currency-hookah-1">تومان</span></span>
+        </div>
+       </div>
+      </div>
+     </section>
+     <section class="menu-section" data-section="cake">
+      <h2 class="section-title">کیک</h2>
+      <div class="menu-grid">
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">کیک شکلاتی</span> <span class="item-price"><span class="price-number">۱۰۰</span><span id="currency-cake-1">تومان</span></span>
+        </div>
+       </div>
+       <div class="menu-item">
+        <div class="item-content"><span class="item-name">کیک روز</span> <span class="item-price">سوال بفرمایید</span>
+        </div>
+       </div>
+      </div>
+     </section>
+    </main>
+    <footer class="footer">
+     <p>کافه شهرزاد • تجربه‌ای متفاوت در هر فنجان</p>
+    </footer>
+   </div>
+  </div>
+  <script>
+        const defaultConfig = {
+            cafe_name: 'شهرزاد',
+            currency_symbol: 'تومان'
+        };
+        
+        async function onConfigChange(config) {
+            const cafeName = config.cafe_name || defaultConfig.cafe_name;
+            const currencySymbol = config.currency_symbol || defaultConfig.currency_symbol;
+            
+            const cafeNameElement = document.getElementById('cafe-name');
+            if (cafeNameElement) {
+                cafeNameElement.textContent = cafeName;
+            }
+            
+            const currencyElements = document.querySelectorAll('[id^="currency-"]');
+            currencyElements.forEach(element => {
+                element.textContent = currencySymbol;
+            });
+        }
+        
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+        
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ['cafe_name', config.cafe_name || defaultConfig.cafe_name],
+                ['currency_symbol', config.currency_symbol || defaultConfig.currency_symbol]
+            ]);
+        }
+        
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+        
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const menuSections = document.querySelectorAll('.menu-section');
+        
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const category = this.getAttribute('data-category');
+                
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                menuSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                const targetSection = document.querySelector(`[data-section="${category}"]`);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+            });
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b325b15f51ef031',t:'MTc2NjYwMjk3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
